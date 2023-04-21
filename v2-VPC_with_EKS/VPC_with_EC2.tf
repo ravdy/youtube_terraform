@@ -17,13 +17,23 @@ resource "aws_vpc" "demo-vpc" {
 }
 
 // Create Subnet
-resource "aws_subnet" "demo_subnet" {
+resource "aws_subnet" "demo_subnet-1" {
   vpc_id     = aws_vpc.demo-vpc.id 
   cidr_block = var.subnet1-cidr
   availability_zone = var.subent_az
 
   tags = {
-    Name = "demo_subnet"
+    Name = "demo_subnet-1"
+  }
+}
+// Create Subnet
+resource "aws_subnet" "demo_subnet-2" {
+  vpc_id     = aws_vpc.demo-vpc.id 
+  cidr_block = var.subnet2-cidr
+  availability_zone = var.subent_az
+
+  tags = {
+    Name = "demo_subnet-2"
   }
 }
 
