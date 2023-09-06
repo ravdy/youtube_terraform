@@ -5,6 +5,17 @@ terraform {
       version = "< 5.0"
     }
   }
+
+    backend "s3" {
+    # Replace this with your bucket name!
+    bucket         = "valaxy-terraform-state-file"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-east-1"
+    # Replace this with your DynamoDB table name!
+    dynamodb_table = "terraform-up-and-running-locks"
+    encrypt        = true
+  }
+
 }
 
 provider "aws" {
@@ -18,7 +29,11 @@ resource "aws_instance" "amazon-server" {
     Name = "demo-server"
   }
 }
-
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "valaxy-terraform-state-file"
+
+  # Prevent accidental deletion of this S3 bucket
+  lifecycle {
+    prevent_destroy = true
+  }
 }

@@ -18,7 +18,11 @@ resource "aws_instance" "amazon-server" {
     Name = "demo-server"
   }
 }
-
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "valaxy-terraform-state-file"
+
+  # Prevent accidental deletion of this S3 bucket
+  lifecycle {
+    prevent_destroy = true
+  }
 }
